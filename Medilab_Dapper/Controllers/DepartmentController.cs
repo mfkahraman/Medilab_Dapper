@@ -57,7 +57,8 @@ namespace Medilab_Dapper.Controllers
             {
                 return NotFound();
             }
-            return View(department);
+            await repository.DeleteDepartmentAsync(id);
+            return RedirectToAction("Index");
         }
     }
 }

@@ -27,7 +27,7 @@
                 <td>@item.Description</td>
                 <td>
                     <a asp-action="UpdateDepartment" asp-route-id="@item.DepartmentId" class="btn btn-primary">Güncelle</a>
-                    <a asp-action="DeletDepartment" asp-route-id="@item.DepartmentId" class="btn btn-danger" onclick="return confirm('Silmek istediğinize emin misiniz?')">
+                    <a asp-action="DeleteDepartment" asp-route-id="@item.DepartmentId" class="btn btn-danger" onclick="return confirm('Silmek istediğinize emin misiniz?')">
                         Sil
                     </a>
                 </td>
