@@ -1,6 +1,13 @@
+using Medilab_Dapper.Context;
+using Medilab_Dapper.Extensions;
+using Medilab_Dapper.Repositories.DepartmentRepository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddRepositoriesExt();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
