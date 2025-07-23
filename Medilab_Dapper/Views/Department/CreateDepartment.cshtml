@@ -1,0 +1,30 @@
+﻿@model CreateDepartmentDto
+
+@{
+    ViewData["Title"] = "Yeni Departman Ekle";
+}
+
+<h2 class="mb-4 text-primary">
+    @ViewData["Title"]
+</h2>
+
+<form asp-action="CreateDepartment" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="DepartmentName" class="form-label">Departman Adı</label>
+        <input asp-for="DepartmentName" class="form-control" />
+        <span asp-validation-for="DepartmentName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Departman Açıklaması</label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Oluştur</button>
+    <a asp-action="Index" class="btn btn-danger">İptal</a>
+</form>
+
+
