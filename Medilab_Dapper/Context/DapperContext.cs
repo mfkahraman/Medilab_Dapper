@@ -9,7 +9,8 @@ namespace Medilab_Dapper.Context
 
         public DapperContext(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("SqlConnection");
+            _connectionString = configuration.GetConnectionString("SqlConnection") 
+                ?? throw new ArgumentNullException(nameof(configuration), "Connection string cannot be null.");
         }
 
         public IDbConnection CreateConnection() => new SqlConnection(_connectionString);

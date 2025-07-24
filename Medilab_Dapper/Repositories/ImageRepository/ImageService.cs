@@ -6,15 +6,13 @@
         public async Task<string> SaveImageAsync(IFormFile file, string subFolder)
         {
             if (file == null || file.Length == 0)
-                return null;
+                throw new ArgumentException("File cannot be null or empty.", nameof(file));
 
             var extension = Path.GetExtension(file.FileName);
             var newFileName = Guid.NewGuid() + extension;
 
-            // Use the IHostEnvironment to get the WebRootPath
             var absolutePath = Path.Combine(_env.ContentRootPath, "wwwroot", "images", subFolder, newFileName);
 
-            // Ensure directory exists
             Directory.CreateDirectory(Path.GetDirectoryName(absolutePath)!);
 
             using (var stream = new FileStream(absolutePath, FileMode.Create))
@@ -43,7 +41,6 @@
 
             return false;
         }
-
     }
 
 }

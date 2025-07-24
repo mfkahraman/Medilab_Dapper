@@ -4,7 +4,6 @@ using Medilab_Dapper.Repositories.DoctorRepository;
 using Medilab_Dapper.Repositories.ImageRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.Threading.Tasks;
 
 namespace Medilab_Dapper.Controllers
 {
