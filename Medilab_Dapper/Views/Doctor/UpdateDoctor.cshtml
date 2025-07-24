@@ -2,18 +2,18 @@
 
 @{
     ViewData["Title"] = "Doktor Güncelle";
-    Layout = "~/Areas/Admin/Views/AdminLayout/AdminLayout.cshtml";
-
 }
 
 <h2 class="mb-4 text-primary">
     @ViewData["Title"]
 </h2>
 
-<input asp-for="DoctorId" type="hidden" />
 
-<form asp-action="CreateProduct" method="post" enctype="multipart/form-data">
+<form asp-action="UpdateDoctor" method="post" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <input asp-for="DoctorId" type="hidden" />
+    <input asp-for="ImageUrl" type="hidden" />
 
     <div class="mb-3">
         <label asp-for="NameSurname" class="form-label">Doktor Adı</label>
@@ -41,6 +41,6 @@
         <span asp-validation-for="ImageFile" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary">Oluştur</button>
+    <button type="submit" class="btn btn-primary">Güncelle</button>
     <a asp-action="Index" class="btn btn-danger">İptal</a>
 </form>

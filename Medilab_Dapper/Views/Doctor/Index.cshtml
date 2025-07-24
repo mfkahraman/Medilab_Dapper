@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ResultDoctorDto>
+﻿@model IEnumerable<ResultDoctorWithDepartmentDto>
 
 @{
     ViewData["Title"] = "Doktor Listesi";
@@ -24,9 +24,9 @@
         {
             <tr>
                 <td>@item.DoctorId</td>
-
+                <td>@item.NameSurname</td>
                 <td>@item.Description</td>
-                <td>@item.DepartmentId</td>
+                <td>@item.DepartmentName</td>
                 <td>
                     @if (!string.IsNullOrEmpty(item.ImageUrl))
                     {
