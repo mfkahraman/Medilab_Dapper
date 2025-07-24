@@ -5,6 +5,7 @@ namespace Medilab_Dapper.Repositories.DoctorRepository
     public interface IDoctorRepository
     {
         Task<IEnumerable<ResultDoctorDto>> GetAllDoctorsAsync();
+        Task<IEnumerable<ResultDoctorWithDepartmentDto>> GetDoctorsWithDepartmentAsync();
         Task<GetDoctorByIdDto> GetDoctorByIdAsync(int id);
         Task<IEnumerable<ResultDoctorDto>> GetDoctorsByDepartmentIdAsync(int departmentId);
         Task CreateDoctorAsync(CreateDoctorDto createDto);

@@ -36,7 +36,17 @@ namespace Medilab_Dapper.Controllers
             {
                 return NotFound();
             }
-            return View(doctor);
+
+            var updateDoctorDto = new UpdateDoctorDto
+            {
+                DoctorId = doctor.DoctorId,
+                NameSurname = doctor.NameSurname,
+                Description = doctor.Description,
+                DepartmentId = doctor.DepartmentId,
+                ImageUrl = doctor.ImageUrl
+            };
+
+            return View(updateDoctorDto);
         }
 
         [HttpPost]

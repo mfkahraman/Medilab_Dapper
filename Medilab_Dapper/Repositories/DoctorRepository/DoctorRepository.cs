@@ -50,6 +50,16 @@ namespace Medilab_Dapper.Repositories.DoctorRepository
             return dbConnection.QueryAsync<ResultDoctorDto>(query, parameters);
         }
 
+        public Task<IEnumerable<ResultDoctorWithDepartmentDto>> GetDoctorsWithDepartmentAsync()
+        {
+            var query = @"
+                SELECT d.DoctorId, d.NameSurname, d.ImageUrl, d.Description, d.DepartmentId, 
+                       dep.DepartmentName 
+                FROM DOCTORS d
+                INNER JOIN DEPARTMENTS dep ON d.DepartmentId = dep.DepartmentId";
+            return dbConnection.QueryAsync<ResultDoctorWithDepartmentDto>(query);
+        }
+
         public Task UpdateDoctorAsync(UpdateDoctorDto updateDto)
         {
             var query = "UPDATE DOCTORS SET NameSurname = @NameSurname, ImageUrl = @ImageUrl, Description = @Description, DepartmentId = @DepartmentId WHERE DoctorId = @DoctorId";

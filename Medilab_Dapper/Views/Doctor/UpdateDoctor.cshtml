@@ -1,12 +1,16 @@
-﻿@model CreateDoctorDto
+﻿@model UpdateDoctorDto
 
 @{
-    ViewData["Title"] = "Yeni Doktor Oluştur";
+    ViewData["Title"] = "Doktor Güncelle";
+    Layout = "~/Areas/Admin/Views/AdminLayout/AdminLayout.cshtml";
+
 }
 
 <h2 class="mb-4 text-primary">
     @ViewData["Title"]
 </h2>
+
+<input asp-for="DoctorId" type="hidden" />
 
 <form asp-action="CreateProduct" method="post" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
