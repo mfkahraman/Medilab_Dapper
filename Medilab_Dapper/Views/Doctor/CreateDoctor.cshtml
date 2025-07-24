@@ -1,0 +1,44 @@
+﻿@model CreateDoctorDto
+
+@{
+    ViewData["Title"] = "Yeni Doktor Oluştur";
+    Layout = "~/Areas/Admin/Views/AdminLayout/AdminLayout.cshtml";
+
+}
+
+<h2 class="mb-4 text-primary">
+    @ViewData["Title"]
+</h2>
+
+<form asp-action="CreateProduct" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="NameSurname" class="form-label">Doktor Adı</label>
+        <input asp-for="NameSurname" class="form-control" />
+        <span asp-validation-for="NameSurname" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Açıklama</label>
+        <input asp-for="Description" class="form-control" />
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="DepartmentId" class="form-label">Doktorun Departmanı</label>
+        <select asp-for="DepartmentId" class="form-control" asp-items="ViewBag.Departments">
+            <option disabled selected>Departman Seçin</option>
+        </select>
+        <span asp-validation-for="DepartmentId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ImageFile" class="form-label"></label>
+        <input asp-for="ImageFile" type="file" class="form-control" />
+        <span asp-validation-for="ImageFile" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Oluştur</button>
+    <a asp-action="Index" class="btn btn-danger">İptal</a>
+</form>

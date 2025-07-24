@@ -1,5 +1,6 @@
 ﻿using Medilab_Dapper.Context;
 using Medilab_Dapper.Repositories.DepartmentRepository;
+using Medilab_Dapper.Repositories.DoctorRepository;
 
 namespace Medilab_Dapper.Extensions
 {
@@ -11,6 +12,7 @@ namespace Medilab_Dapper.Extensions
             services.AddScoped<DapperContext>();
 
             services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+            services.AddScoped<IDoctorRepository, DoctorRepository>();
 
             return services;
         }
