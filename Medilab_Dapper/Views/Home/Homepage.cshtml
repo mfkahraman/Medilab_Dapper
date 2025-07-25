@@ -53,96 +53,13 @@
         <!-- /Hero Section -->
 
         <!-- About Section -->
-        <section id="about" class="about section">
+        @await Component.InvokeAsync("_AboutComponent")
+        <!-- /About Section -->
 
-            <div class="container">
-
-                <div class="row gy-4 gx-5">
-
-                    <div class="col-lg-6 position-relative align-self-start" data-aos="fade-up" data-aos-delay="200">
-                        <img src="~/MediLab-1.0.0/assets/img/about.jpg" class="img-fluid" alt="">
-                        <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox pulsating-play-btn"></a>
-                    </div>
-
-                    <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="100">
-                        <h3>About Us</h3>
-                        <p>
-                            Dolor iure expedita id fuga asperiores qui sunt consequatur minima. Quidem voluptas deleniti. Sit quia molestiae quia quas qui magnam itaque veritatis dolores. Corrupti totam ut eius incidunt reiciendis veritatis asperiores placeat.
-                        </p>
-                        <ul>
-                            <li>
-                                <i class="fa-solid fa-vial-circle-check"></i>
-                                <div>
-                                    <h5>Ullamco laboris nisi ut aliquip consequat</h5>
-                                    <p>Magni facilis facilis repellendus cum excepturi quaerat praesentium libre trade</p>
-                                </div>
-                            </li>
-                            <li>
-                                <i class="fa-solid fa-pump-medical"></i>
-                                <div>
-                                    <h5>Magnam soluta odio exercitationem reprehenderi</h5>
-                                    <p>Quo totam dolorum at pariatur aut distinctio dolorum laudantium illo direna pasata redi</p>
-                                </div>
-                            </li>
-                            <li>
-                                <i class="fa-solid fa-heart-circle-xmark"></i>
-                                <div>
-                                    <h5>Voluptatem et qui exercitationem</h5>
-                                    <p>Et velit et eos maiores est tempora et quos dolorem autem tempora incidunt maxime veniam</p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section><!-- /About Section -->
         <!-- Stats Section -->
-        <section id="stats" class="stats section light-background">
+        @await Component.InvokeAsync("_StatsComponent")
+        <!-- /Stats Section -->
 
-            <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-                <div class="row gy-4">
-
-                    <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
-                        <i class="fa-solid fa-user-doctor"></i>
-                        <div class="stats-item">
-                            <span data-purecounter-start="0" data-purecounter-end="85" data-purecounter-duration="1" class="purecounter"></span>
-                            <p>Doctors</p>
-                        </div>
-                    </div><!-- End Stats Item -->
-
-                    <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
-                        <i class="fa-regular fa-hospital"></i>
-                        <div class="stats-item">
-                            <span data-purecounter-start="0" data-purecounter-end="18" data-purecounter-duration="1" class="purecounter"></span>
-                            <p>Departments</p>
-                        </div>
-                    </div><!-- End Stats Item -->
-
-                    <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
-                        <i class="fas fa-flask"></i>
-                        <div class="stats-item">
-                            <span data-purecounter-start="0" data-purecounter-end="12" data-purecounter-duration="1" class="purecounter"></span>
-                            <p>Research Labs</p>
-                        </div>
-                    </div><!-- End Stats Item -->
-
-                    <div class="col-lg-3 col-md-6 d-flex flex-column align-items-center">
-                        <i class="fas fa-award"></i>
-                        <div class="stats-item">
-                            <span data-purecounter-start="0" data-purecounter-end="150" data-purecounter-duration="1" class="purecounter"></span>
-                            <p>Awards</p>
-                        </div>
-                    </div><!-- End Stats Item -->
-
-                </div>
-
-            </div>
-
-        </section><!-- /Stats Section -->
         <!-- Services Section -->
         <section id="services" class="services section">
 
@@ -235,7 +152,9 @@
 
             </div>
 
-        </section><!-- /Services Section -->
+        </section>
+        <!-- /Services Section -->
+
         <!-- Appointment Section -->
         <section id="appointment" class="appointment section">
 
@@ -294,7 +213,9 @@
 
             </div>
 
-        </section><!-- /Appointment Section -->
+        </section>
+        <!-- /Appointment Section -->
+
         <!-- Departments Section -->
         <section id="departments" class="departments section">
 
@@ -394,7 +315,9 @@
 
             </div>
 
-        </section><!-- /Departments Section -->
+        </section>
+        <!-- /Departments Section -->
+
         <!-- Doctors Section -->
         <section id="doctors" class="doctors section">
 
@@ -480,7 +403,9 @@
 
             </div>
 
-        </section><!-- /Doctors Section -->
+        </section>
+        <!-- /Doctors Section -->
+
         <!-- Faq Section -->
         <section id="faq" class="faq section light-background">
 
@@ -554,7 +479,9 @@
 
             </div>
 
-        </section><!-- /Faq Section -->
+        </section>
+        <!-- /Faq Section -->
+
         <!-- Testimonials Section -->
         <section id="testimonials" class="testimonials section">
 
@@ -700,7 +627,9 @@
 
             </div>
 
-        </section><!-- /Testimonials Section -->
+        </section>
+        <!-- /Testimonials Section -->
+
         <!-- Gallery Section -->
         <section id="gallery" class="gallery section">
 
@@ -782,7 +711,9 @@
 
             </div>
 
-        </section><!-- /Gallery Section -->
+        </section>
+        <!-- /Gallery Section -->
+
         <!-- Contact Section -->
         <section id="contact" class="contact section">
 
@@ -863,7 +794,8 @@
 
             </div>
 
-        </section><!-- /Contact Section -->
+        </section>
+        <!-- /Contact Section -->
 
     </main>
 
