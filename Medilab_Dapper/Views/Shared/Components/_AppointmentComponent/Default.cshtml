@@ -61,43 +61,42 @@
 
     <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-        <form id="appointmentForm" asp-action="CreateAppointment" method="post">
+        <form id="form">
             <div class="row">
                 <div class="col-md-4 form-group">
-                    <input type="text" asp-for="FullName" class="form-control" placeholder="Adınız Soyadınız" required>
+                    <input type="text" asp-for="FullName" name="FullName" class="form-control" placeholder="Adınız Soyadınız" required>
                 </div>
                 <div class="col-md-4 form-group mt-3 mt-md-0">
-                    <input type="email" asp-for="Email" class="form-control" placeholder="E-posta Adresiniz" required>
+                    <input type="email" asp-for="Email" name="Email" class="form-control" placeholder="E-posta Adresiniz" required>
                 </div>
                 <div class="col-md-4 form-group mt-3 mt-md-0">
-                    <input type="tel" asp-for="Phone" class="form-control" placeholder="Telefon Numaranız" required>
+                    <input type="tel" asp-for="Phone" name="Phone" class="form-control" placeholder="Telefon Numaranız" required>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-4 form-group mt-3">
-                    <input type="datetime-local" asp-for="AppointmentDate" class="form-control" required>
+                    <input type="datetime-local" asp-for="AppointmentDate" name="AppointmentDate" class="form-control" required>
                 </div>
                 <div class="col-md-4 form-group mt-3">
-                    <select asp-for="DepartmentId" class="form-select" asp-items="ViewBag.Departments" required>
+                    <select asp-for="DepartmentId" name="DepartmentId" class="form-select" asp-items="ViewBag.Departments" required>
                         <option disabled selected>Bölüm Seçin</option>
                     </select>
                 </div>
                 <div class="col-md-4 form-group mt-3">
-                    <select asp-for="DoctorId" class="form-select" asp-items="ViewBag.Doctors" required>
+                    <select asp-for="DoctorId" name="DoctorId" class="form-select" asp-items="ViewBag.Doctors" required>
                         <option disabled selected>Doktor Seçin</option>
                     </select>
                 </div>
             </div>
 
             <div class="form-group mt-3">
-                <textarea asp-for="Message" class="form-control" rows="5" placeholder="Mesajınız (İsteğe bağlı)"></textarea>
+                <textarea asp-for="Message" name="Message" class="form-control" rows="5" placeholder="Mesajınız (İsteğe bağlı)"></textarea>
             </div>
+
             <div class="mt-3">
-                <div class="loading" style="display:none">Yükleniyor...</div>
-                <div class="error-message text-danger" style="display:none"></div>
-                <div class="sent-message text-success" style="display:none"></div>
                 <div class="text-center"><button type="submit">Randevu Oluştur</button></div>
             </div>
+
         </form>
 
     </div>
@@ -105,28 +104,41 @@
 
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <script>
-        @if (TempData["SuccessMessage"] != null)
-        {
-                <text>
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Başarılı',
-                        text: '@TempData["SuccessMessage"]'
-                    });
-                </text>
-        }
+        document.getElementById("form").addEventListener("submit", function (e) {
+            e.preventDefault(); // Formun default submit davranışını engelle
 
-        @if (TempData["ErrorMessage"] != null)
-        {
-                <text>
+            const formData = new FormData(this); // Formu al
+
+            $.ajax({
+                type: "POST",
+                url: "/Home/CreateAppointment",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    if (response.success) {
                     Swal.fire({
-                        icon: 'error',
-                        title: 'Hata',
-                        text: '@TempData["ErrorMessage"]'
+                        title: "Başarılı!",
+                        text: response.message,
+                        icon: "success",
+                        showConfirmButton: true
+                    }).then(() => {
+                        document.getElementById("form").reset();
                     });
-                </text>
-        }
+
+                    }
+                },
+                error: function () {
+                    Swal.fire({
+                        title: "Hata!",
+                        text: "Bir hata oluştu, lütfen tekrar deneyin.",
+                        icon: "error"
+                    });
+                }
+            });
+        });
     </script>
 }
