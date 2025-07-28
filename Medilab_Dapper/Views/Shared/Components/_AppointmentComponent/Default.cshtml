@@ -4,6 +4,55 @@
     _AppointmentComponent
 *@
 
+<style>
+    form input,
+    form textarea,
+    form select {
+        color: var(--default-color);
+        background-color: transparent;
+        border-color: color-mix(in srgb, var(--default-color), transparent 80%);
+        border-radius: 0;
+        box-shadow: none;
+        font-size: 14px;
+        padding: 10px !important;
+    }
+
+        form input:focus,
+        form textarea:focus,
+        form select:focus {
+            border-color: var(--accent-color);
+        }
+
+        form input::placeholder,
+        form textarea::placeholder,
+        form select::placeholder {
+            color: color-mix(in srgb, var(--default-color), transparent 70%);
+        }
+
+    form input,
+    form select {
+        height: 44px;
+    }
+
+    form textarea {
+        padding: 10px 12px;
+    }
+
+    form button[type=submit] {
+        background: var(--accent-color);
+        border: 0;
+        padding: 10px 35px;
+        color: #fff;
+        transition: 0.4s;
+        border-radius: 50px;
+    }
+
+        form button[type=submit]:hover {
+            background: color-mix(in srgb, var(--accent-color) 90%, white 15%);
+        }
+</style>
+
+
 <section id="appointment" class="appointment section">
     <div class="container section-title" data-aos="fade-up">
         <h2>Randevu</h2>
@@ -12,7 +61,7 @@
 
     <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-        <form id="appointmentForm" class="php-email-form">
+        <form id="appointmentForm" asp-action="CreateAppointment" method="post">
             <div class="row">
                 <div class="col-md-4 form-group">
                     <input type="text" asp-for="FullName" class="form-control" placeholder="Adınız Soyadınız" required>
@@ -54,60 +103,30 @@
     </div>
 </section>
 
-<script>
-    document.getElementById("appointmentForm").addEventListener("submit", async function (e) {
-        e.preventDefault();
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-        const loading = document.querySelector(".loading");
-        const errorMessage = document.querySelector(".error-message");
-        const sentMessage = document.querySelector(".sent-message");
-
-        loading.style.display = "block";
-        errorMessage.style.display = "none";
-        sentMessage.style.display = "none";
-
-        const form = e.target;
-
-        const data = {
-            fullName: form["FullName"].value,
-            email: form["Email"].value,
-            phone: form["Phone"].value,
-            appointmentDate: form["AppointmentDate"].value,
-            departmentId: parseInt(form["DepartmentId"].value),
-            doctorId: parseInt(form["DoctorId"].value),
-            message: form["Message"].value
-        };
-
-    try {
-        const response = await fetch("/Home/CreateAppointment", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data)
-        });
-
-        const result = await response.json();
-
-        loading.style.display = "none";
-
-        if (result.success) {
-            errorMessage.style.display = "none"; // hata mesajını gizle
-            sentMessage.textContent = result.message;
-            sentMessage.style.display = "block";
-            form.reset();
-        } else {
-            sentMessage.style.display = "none"; // başarı mesajını gizle
-            errorMessage.textContent = result.message || "Randevu oluşturulamadı.";
-            errorMessage.style.display = "block";
+    <script>
+        @if (TempData["SuccessMessage"] != null)
+        {
+                <text>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Başarılı',
+                        text: '@TempData["SuccessMessage"]'
+                    });
+                </text>
         }
 
-    } catch (error) {
-        loading.style.display = "none";
-        sentMessage.style.display = "none";
-        errorMessage.textContent = "Bir hata oluştu. Lütfen daha sonra tekrar deneyin.";
-        errorMessage.style.display = "block";
-    }
-
-    });
-</script>
+        @if (TempData["ErrorMessage"] != null)
+        {
+                <text>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Hata',
+                        text: '@TempData["ErrorMessage"]'
+                    });
+                </text>
+        }
+    </script>
+}

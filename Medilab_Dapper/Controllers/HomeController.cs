@@ -37,17 +37,19 @@ namespace Medilab_Dapper.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAppointment([FromBody] CreateAppointmentDto dto)
+        [HttpPost]
+        public async Task<IActionResult> CreateAppointment(CreateAppointmentDto dto)
         {
-            var result = await repository.CreateAppointmentAsync(dto);
+            if (!ModelState.IsValid)
+                return View(dto); // Hatalıysa sayfa tekrar gösterilir
+
+            bool result = await repository.CreateAppointmentAsync(dto);
             if (result)
-            {
-                return Json(new { success = true, message = "Randevu başarıyla oluşturuldu." });
-            }
+                TempData["SuccessMessage"] = "Randevunuz başarıyla oluşturuldu.";
             else
-            {
-                return Json(new { success = false, message = "Randevu oluşturulurken bir hata oluştu." });
-            }
+                TempData["ErrorMessage"] = "Bir hata oluştu. Lütfen tekrar deneyin.";
+
+            return RedirectToAction("CreateAppointment");
         }
 
 
