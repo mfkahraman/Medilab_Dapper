@@ -51,5 +51,20 @@ namespace Medilab_Dapper.Repositories.AppointmentRepository
             return dbConnection.QueryAsync<ResultAppointmentDto>(query);
         }
 
+        public async Task<ResultAppointmentDto> GetAppointmentByIdAsync(int id)
+        {
+            var query = @"SELECT A.*, D.DepartmentName, DR.NameSurname
+                        FROM Appointments A
+                        INNER JOIN Departments D ON A.DepartmentId = D.DepartmentId
+                        INNER JOIN Doctors DR ON A.DoctorId = DR.DoctorId
+                        WHERE A.AppointmentId = @AppointmentId";
+            var parameters = new { AppointmentId = id };
+            var appointment = await dbConnection.QuerySingleOrDefaultAsync<ResultAppointmentDto>(query, parameters);
+            if (appointment == null)
+            {
+                throw new KeyNotFoundException($"Appointment with ID {id} not found.");
+            }
+            return appointment;
+        }
     }
 }
