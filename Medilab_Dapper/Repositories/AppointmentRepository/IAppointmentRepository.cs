@@ -7,8 +7,8 @@ namespace Medilab_Dapper.Repositories.AppointmentRepository
         Task<IEnumerable<ResultAppointmentDto>> GetAllAppointmentsAsync();
         Task<ResultAppointmentDto>GetAppointmentByIdAsync(int id);
         Task<bool> CreateAppointmentAsync(CreateAppointmentDto createAppointmentDto);
-        Task<bool> ConfirmAppointment(int appointmentId);
-        Task<bool> CancelAppointment(int appointmentId);
-        Task<bool> DeleteAppointment(int appointmentId);
+        Task<bool> ConfirmAppointmentAsync(int appointmentId);
+        Task<bool> CancelAppointmentAsync(int appointmentId);
+        Task<bool> DeleteAppointmentAsync(int appointmentId);
     }
 }

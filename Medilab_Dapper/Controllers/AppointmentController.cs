@@ -1,5 +1,6 @@
 ﻿using Medilab_Dapper.Repositories.AppointmentRepository;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace Medilab_Dapper.Controllers
 {
@@ -11,14 +12,27 @@ namespace Medilab_Dapper.Controllers
             return View(appointments);
         }
 
-        public IActionResult DeleteAppointment(int id)
+        public async Task<IActionResult> DeleteAppointment(int id)
         {
             var appointment = appointmentRepository.GetAppointmentByIdAsync(id);
             if (appointment == null)
             {
                 return NotFound();
             }
-            return View(appointment);
+            await appointmentRepository.DeleteAppointmentAsync(id);
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> ConfirmAppointment(int id)
+        {
+            await appointmentRepository.ConfirmAppointmentAsync(id);
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> CancelAppointment(int id)
+        {
+            await appointmentRepository.CancelAppointmentAsync(id);
+            return RedirectToAction("Index");
         }
     }
 }
