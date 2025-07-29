@@ -10,14 +10,14 @@ namespace Medilab_Dapper.Repositories.AppointmentRepository
         private readonly IDbConnection dbConnection = context.CreateConnection();
         public async Task<bool> CancelAppointmentAsync(int appointmentId)
         {
-            var query = "UPDATE Appointments SET IsActive = 0 WHERE AppointmentId = @AppointmentId";
+            var query = "UPDATE Appointments SET IsActive = 0, IsConfirmed = 0 WHERE Id = @AppointmentId";
             var parameters = new { AppointmentId = appointmentId };
             return await dbConnection.ExecuteAsync(query, parameters).ContinueWith(t => t.Result > 0);
         }
 
         public async Task<bool> ConfirmAppointmentAsync(int appointmentId)
         {
-            var query = "UPDATE Appointments SET IsConfirmed = 1 WHERE AppointmentId = @AppointmentId";
+            var query = "UPDATE Appointments SET IsConfirmed = 1 WHERE Id = @AppointmentId";
             var parameters = new { AppointmentId = appointmentId };
             return await dbConnection.ExecuteAsync(query, parameters).ContinueWith(t => t.Result > 0);
         }
@@ -37,7 +37,7 @@ namespace Medilab_Dapper.Repositories.AppointmentRepository
 
         public async Task<bool> DeleteAppointmentAsync(int appointmentId)
         {
-            var query = "DELETE FROM Appointments WHERE AppointmentId = @AppointmentId";
+            var query = "DELETE FROM Appointments WHERE Id = @AppointmentId";
             var parameters = new { AppointmentId = appointmentId };
             return await dbConnection.ExecuteAsync(query, parameters).ContinueWith(t => t.Result > 0);
         }
@@ -45,9 +45,10 @@ namespace Medilab_Dapper.Repositories.AppointmentRepository
         public async Task<IEnumerable<ResultAppointmentDto>> GetAllAppointmentsAsync()
         {
             var query = @" SELECT A.*, D.DepartmentName, DR.NameSurname
-                        FROM Appointmets A
+                        FROM Appointments A
                         INNER JOIN Departments D ON A.DepartmentId = D.DepartmentId
-                        INNER JOIN Doctors DR ON A.DoctorId = DR.DoctorId";
+                        INNER JOIN Doctors DR ON A.DoctorId = DR.DoctorId
+                        ORDER BY A.AppointmentDate ASC";
             return await dbConnection.QueryAsync<ResultAppointmentDto>(query);
         }
 
@@ -57,7 +58,7 @@ namespace Medilab_Dapper.Repositories.AppointmentRepository
                         FROM Appointments A
                         INNER JOIN Departments D ON A.DepartmentId = D.DepartmentId
                         INNER JOIN Doctors DR ON A.DoctorId = DR.DoctorId
-                        WHERE A.AppointmentId = @AppointmentId";
+                        WHERE A.Id = @AppointmentId";
             var parameters = new { AppointmentId = id };
             var appointment = await dbConnection.QuerySingleOrDefaultAsync<ResultAppointmentDto>(query, parameters);
             if (appointment == null)
