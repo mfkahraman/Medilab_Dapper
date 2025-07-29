@@ -61,16 +61,16 @@
 
     <div class="container" data-aos="fade-up" data-aos-delay="100">
 
-        <form id="form">
+        <form id="form" method="post" action="/Home/CreateAppointment" novalidate>
             <div class="row">
                 <div class="col-md-4 form-group">
                     <input type="text" asp-for="FullName" name="FullName" class="form-control" placeholder="Adınız Soyadınız" required>
                 </div>
                 <div class="col-md-4 form-group mt-3 mt-md-0">
-                    <input type="email" asp-for="Email" name="Email" class="form-control" placeholder="E-posta Adresiniz" required>
+                    <input type="text" asp-for="Email" name="Email" class="form-control" placeholder="E-posta Adresiniz" required>
                 </div>
                 <div class="col-md-4 form-group mt-3 mt-md-0">
-                    <input type="tel" asp-for="Phone" name="Phone" class="form-control" placeholder="Telefon Numaranız" required>
+                    <input type="text" asp-for="Phone" name="Phone" class="form-control" placeholder="Telefon Numaranız" required>
                 </div>
             </div>
             <div class="row">
@@ -79,12 +79,12 @@
                 </div>
                 <div class="col-md-4 form-group mt-3">
                     <select asp-for="DepartmentId" name="DepartmentId" class="form-select" asp-items="ViewBag.Departments" required>
-                        <option disabled selected>Bölüm Seçin</option>
+                        <option value="" disabled selected>Bölüm Seçin</option>
                     </select>
                 </div>
                 <div class="col-md-4 form-group mt-3">
                     <select asp-for="DoctorId" name="DoctorId" class="form-select" asp-items="ViewBag.Doctors" required>
-                        <option disabled selected>Doktor Seçin</option>
+                        <option value="" disabled selected>Doktor Seçin</option>
                     </select>
                 </div>
             </div>
@@ -102,43 +102,52 @@
     </div>
 </section>
 
-@section Scripts {
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <script>
-        document.getElementById("form").addEventListener("submit", function (e) {
-            e.preventDefault(); // Formun default submit davranışını engelle
+<!-- SweetAlert (isteğe bağlı) -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-            const formData = new FormData(this); // Formu al
+<!-- Senin scriptin -->
+<script>
+    $(document).ready(function () {
+        $("#form").on("submit", function (e) {
+            e.preventDefault();
+
+            const form = $(this);
+            const formData = form.serialize();
 
             $.ajax({
                 type: "POST",
                 url: "/Home/CreateAppointment",
                 data: formData,
-                processData: false,
-                contentType: false,
                 success: function (response) {
                     if (response.success) {
-                    Swal.fire({
-                        title: "Başarılı!",
-                        text: response.message,
-                        icon: "success",
-                        showConfirmButton: true
-                    }).then(() => {
-                        document.getElementById("form").reset();
-                    });
-
+                        Swal.fire({
+                            title: "Başarılı!",
+                            text: response.message,
+                            icon: "success"
+                        }).then(() => {
+                            form[0].reset();
+                            window.location.href = "/Home/Homepage";
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Hata!",
+                            text: response.message || "Bir hata oluştu.",
+                            icon: "error"
+                        });
                     }
                 },
                 error: function () {
                     Swal.fire({
-                        title: "Hata!",
-                        text: "Bir hata oluştu, lütfen tekrar deneyin.",
+                        title: "Sunucu Hatası!",
+                        text: "Beklenmedik bir hata oluştu.",
                         icon: "error"
                     });
                 }
             });
         });
-    </script>
-}
+    });
+</script>
+

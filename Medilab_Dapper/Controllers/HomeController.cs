@@ -37,11 +37,12 @@ namespace Medilab_Dapper.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAppointment([FromForm] CreateAppointmentDto dto)
+        public async Task<IActionResult> CreateAppointment(CreateAppointmentDto dto)
         {
             if (!ModelState.IsValid)
             {
-                return Json(new { success = false, message = "Geçersiz veri gönderildi." });
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage);
+                return Json(new { success = false, message = string.Join(" | ", errors) });
             }
 
             var result = await repository.CreateAppointmentAsync(dto);
