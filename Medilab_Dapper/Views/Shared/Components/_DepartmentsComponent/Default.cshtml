@@ -1,5 +1,7 @@
-﻿@*
-    _DepartmentsComponent - Türkçe versiyon
+﻿@model List<ResultDepartmentDto>
+
+@*
+    _DepartmentsComponent
 *@
 
 <section id="departments" class="departments section">
@@ -11,93 +13,41 @@
     </div><!-- Bölüm Başlığı Sonu -->
 
     <div class="container" data-aos="fade-up" data-aos-delay="100">
-
         <div class="row">
+            <!-- Sol Menü -->
             <div class="col-lg-3">
                 <ul class="nav nav-tabs flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link active show" data-bs-toggle="tab" href="#departments-tab-1">Kardiyoloji</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#departments-tab-2">Nöroloji</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#departments-tab-3">Hepatoloji</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#departments-tab-4">Çocuk Sağlığı</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="tab" href="#departments-tab-5">Göz Hastalıkları</a>
-                    </li>
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        var dept = Model[i];
+                        <li class="nav-item">
+                            <a class="nav-link @(i == 0 ? "active show" : "")" data-bs-toggle="tab" href="#departments-tab-@dept.DepartmentId">@dept.DepartmentName</a>
+                        </li>
+                    }
                 </ul>
             </div>
+
+            <!-- Sağ İçerik -->
             <div class="col-lg-9 mt-4 mt-lg-0">
                 <div class="tab-content">
-                    <div class="tab-pane active show" id="departments-tab-1">
-                        <div class="row">
-                            <div class="col-lg-8 details order-2 order-lg-1">
-                                <h3>Kardiyoloji</h3>
-                                <p class="fst-italic">Kalp hastalıklarının tanı ve tedavisinde son teknoloji cihazlar ve deneyimli uzman hekimlerle hizmet veriyoruz.</p>
-                                <p>Hastalarımızın kalp sağlığını korumak için kapsamlı tetkikler yapıyor, bireysel tedavi planları hazırlıyoruz. Modern yöntemlerle güvenilir bakım sunmaktayız.</p>
-                            </div>
-                            <div class="col-lg-4 text-center order-1 order-lg-2">
-                                <img src="~/MediLab-1.0.0/assets/img/departments-1.jpg" alt="Kardiyoloji Bölümü" class="img-fluid">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="departments-tab-2">
-                        <div class="row">
-                            <div class="col-lg-8 details order-2 order-lg-1">
-                                <h3>Nöroloji</h3>
-                                <p class="fst-italic">Sinir sistemi hastalıkları tanısı ve tedavisinde multidisipliner yaklaşımımızla yanınızdayız.</p>
-                                <p>Baş ağrıları, epilepsi, inme gibi durumların takibinde gelişmiş yöntemler kullanıyoruz. Hastalarımıza kişiye özel tedavi seçenekleri sunuyoruz.</p>
-                            </div>
-                            <div class="col-lg-4 text-center order-1 order-lg-2">
-                                <img src="~/MediLab-1.0.0/assets/img/departments-2.jpg" alt="Nöroloji Bölümü" class="img-fluid">
+                    @for (int i = 0; i < Model.Count; i++)
+                    {
+                        var dept = Model[i];
+                        <div class="tab-pane @(i == 0 ? "active show" : "")" id="departments-tab-@dept.DepartmentId">
+                            <div class="row">
+                                <div class="col-lg-8 details order-2 order-lg-1">
+                                    <h3>@dept.DepartmentName</h3>
+                                    <p class="fst-italic">@dept.Description</p>
+                                    <p>Hastalarımıza daha iyi hizmet sunmak için alanında uzman doktorlarımızla çalışıyoruz.</p>
+                                </div>
+                                <div class="col-lg-4 text-center order-1 order-lg-2">
+                                    <img src="@dept.ImageUrl" alt="@dept.DepartmentName Bölümü" class="img-fluid" />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="tab-pane" id="departments-tab-3">
-                        <div class="row">
-                            <div class="col-lg-8 details order-2 order-lg-1">
-                                <h3>Hepatoloji</h3>
-                                <p class="fst-italic">Karaciğer hastalıklarının tanı ve tedavisinde uzmanlaşmış ekip ve ileri teknolojik cihazlarla hizmet veriyoruz.</p>
-                                <p>Hepatitler, siroz ve diğer karaciğer hastalıklarında güncel tedavi protokolleri uyguluyor, hastalarımıza kapsamlı bakım sağlıyoruz.</p>
-                            </div>
-                            <div class="col-lg-4 text-center order-1 order-lg-2">
-                                <img src="~/MediLab-1.0.0/assets/img/departments-3.jpg" alt="Hepatoloji Bölümü" class="img-fluid">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="departments-tab-4">
-                        <div class="row">
-                            <div class="col-lg-8 details order-2 order-lg-1">
-                                <h3>Çocuk Sağlığı</h3>
-                                <p class="fst-italic">Çocukların sağlıklı büyümesi ve gelişimi için kapsamlı sağlık hizmetleri sunuyoruz.</p>
-                                <p>Aşı takibi, gelişim izlemi ve hastalıkların erken teşhisi gibi hizmetlerimizle minik hastalarımızın sağlığı bizim önceliğimizdir.</p>
-                            </div>
-                            <div class="col-lg-4 text-center order-1 order-lg-2">
-                                <img src="~/MediLab-1.0.0/assets/img/departments-4.jpg" alt="Çocuk Sağlığı Bölümü" class="img-fluid">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="departments-tab-5">
-                        <div class="row">
-                            <div class="col-lg-8 details order-2 order-lg-1">
-                                <h3>Göz Hastalıkları</h3>
-                                <p class="fst-italic">Göz sağlığı ve hastalıkları konusunda modern tanı ve tedavi imkanları sunuyoruz.</p>
-                                <p>Katarakt, glokom, retina hastalıkları gibi göz problemlerinde ileri teknoloji cihazlarla tedavi sağlıyoruz.</p>
-                            </div>
-                            <div class="col-lg-4 text-center order-1 order-lg-2">
-                                <img src="~/MediLab-1.0.0/assets/img/departments-5.jpg" alt="Göz Hastalıkları Bölümü" class="img-fluid">
-                            </div>
-                        </div>
-                    </div>
+                    }
                 </div>
             </div>
         </div>
-
     </div>
-
 </section>
