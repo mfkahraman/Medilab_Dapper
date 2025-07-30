@@ -15,6 +15,7 @@
             <th>Id</th>
             <th>Bölüm Adı</th>
             <th>Açıklama</th>
+            <th>Görsel</th>
             <th>İşlemler</th>
         </tr>
     </thead>
@@ -27,11 +28,18 @@
                 <td>@item.DepartmentName</td>
                 <td>@item.Description</td>
                 <td>
+                    @if (!string.IsNullOrEmpty(item.ImageUrl))
+                    {
+                        <img src="@item.ImageUrl" width="60" height="80" class="rounded shadow-sm" alt="Doktor Görseli" />
+                    }
+                </td>
+                <td>
                     <a asp-action="UpdateDepartment" asp-route-id="@item.DepartmentId" class="btn btn-primary">Güncelle</a>
                     <a asp-action="DeleteDepartment" asp-route-id="@item.DepartmentId" class="btn btn-danger" onclick="return confirm('Silmek istediğinize emin misiniz?')">
                         Sil
                     </a>
                 </td>
+
             </tr>
         }
     </tbody>

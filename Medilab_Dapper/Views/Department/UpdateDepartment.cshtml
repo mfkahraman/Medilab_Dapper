@@ -9,10 +9,10 @@
     @ViewData["Title"]
 </h2>
 
-<form asp-action="UpdateDepartment" method="post">
+<form asp-action="UpdateDepartment" method="post" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-    <input type="hidden" asp-for="DepartmentId" />
+    <input asp-for="DepartmentId" type="hidden" />
     <input asp-for="ImageUrl" type="hidden" />
 
     <div class="mb-3">
@@ -33,7 +33,7 @@
         <span asp-validation-for="ImageFile" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary">Oluştur</button>
+    <button type="submit" class="btn btn-primary">Güncelle</button>
     <a asp-action="Index" class="btn btn-danger">İptal</a>
 </form>
 
