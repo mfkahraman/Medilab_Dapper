@@ -1,18 +1,20 @@
 ﻿using Medilab_Dapper.Dtos.AppointmentDtos;
+using Medilab_Dapper.Dtos.ContactMessageDtos;
 using Medilab_Dapper.Models;
 using Medilab_Dapper.Repositories.AppointmentRepository;
+using Medilab_Dapper.Repositories.ContactMessageRepository;
 using Medilab_Dapper.Repositories.DepartmentRepository;
 using Medilab_Dapper.Repositories.DoctorRepository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
-using System.Threading.Tasks;
 
 namespace Medilab_Dapper.Controllers
 {
     public class HomeController(IAppointmentRepository repository,
                                 IDoctorRepository doctor,
-                                IDepartmentRepository departmentRepository) : Controller
+                                IDepartmentRepository departmentRepository,
+                                IContactMessageRepository messageRepository) : Controller
     {
         public IActionResult Index()
         {
@@ -73,6 +75,26 @@ namespace Medilab_Dapper.Controllers
                 Value = d.DoctorId.ToString(),
                 Text = d.NameSurname
             }).ToList();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateContactMessage(CreateContactMessageDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Json(new { success = false, message = "Lütfen tüm alanları doldurun." });
+            }
+
+            var result = await messageRepository.CreateAsync(dto);
+
+            if (result)
+            {
+                return Json(new { success = true, message = "Mesajınız başarıyla oluşturuldu. En kısa sürede dönüş yapacağız." });
+            }
+            else
+            {
+                return Json(new { success = false, message = "Mesajınız oluşturulurken bir hata oluştu." });
+            }
         }
 
     }

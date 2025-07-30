@@ -2,6 +2,8 @@
     _ContactComponent
 *@
 
+@model CreateContactMessageDto
+
 <section id="contact" class="contact section">
 
     <!-- Bölüm Başlığı -->
@@ -40,32 +42,28 @@
                 </div><!-- Bilgi Öğesi Sonu -->
 
             </div>
-
+            @* class="php-email-form" *@
             <div class="col-lg-8">
-                <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+                <form id="contactForm" method="post">
                     <div class="row gy-4">
 
                         <div class="col-md-6">
-                            <input type="text" name="name" class="form-control" placeholder="Adınız Soyadınız" required>
+                            <input type="text" asp-for="FullName" name="FullName" class="form-control" placeholder="Adınız Soyadınız" required>
                         </div>
 
                         <div class="col-md-6 ">
-                            <input type="email" class="form-control" name="email" placeholder="E-posta Adresiniz" required>
+                            <input type="email" asp-for="Email" name="Email" class="form-control" placeholder="E-posta Adresiniz" required>
                         </div>
 
                         <div class="col-md-12">
-                            <input type="text" class="form-control" name="subject" placeholder="Konu" required>
+                            <input type="text" asp-for="Subject" name="Subject" class="form-control" placeholder="Konu" required>
                         </div>
 
                         <div class="col-md-12">
-                            <textarea class="form-control" name="message" rows="6" placeholder="Mesajınız" required></textarea>
+                            <textarea class="form-control" asp-for="Message" name="Message" rows="6" placeholder="Mesajınız" required></textarea>
                         </div>
 
                         <div class="col-md-12 text-center">
-                            <div class="loading">Yükleniyor</div>
-                            <div class="error-message"></div>
-                            <div class="sent-message">Mesajınız gönderildi. Teşekkür ederiz!</div>
-
                             <button type="submit">Mesaj Gönder</button>
                         </div>
 
@@ -78,3 +76,38 @@
     </div>
 
 </section>
+
+
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- SweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+<script>
+    $("#contactForm").submit(function (e) {
+        e.preventDefault(); // Sayfanın resetlenmesini engeller
+        const formData = $(this).serialize();
+
+        $.ajax({
+            type: "POST",
+            url: "/Home/CreateContactMessage", // ASP.NET controller endpoint
+            data: formData,
+            success: function (response) {
+                console.log("Yanıt:", response);
+                if (response.success) {
+                    Swal.fire("Başarılı", response.message, "success");
+                    $("#contactForm")[0].reset(); // Formu temizle
+                } else {
+                    Swal.fire("Hata", response.message, "error");
+                }
+            },
+            error: function (xhr, status, error) {
+                Swal.fire("Sunucu Hatası", "Mesaj gönderilirken bir hata oluştu.", "error");
+            }
+        });
+    });
+</script>
+
