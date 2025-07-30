@@ -1,10 +1,13 @@
-﻿using Medilab_Dapper.Dtos.DepartmentDtos;
+﻿using Humanizer;
+using Medilab_Dapper.Dtos.DepartmentDtos;
 using Medilab_Dapper.Repositories.DepartmentRepository;
+using Medilab_Dapper.Repositories.ImageRepository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Medilab_Dapper.Controllers
 {
-    public class DepartmentController(IDepartmentRepository repository) : Controller
+    public class DepartmentController(IDepartmentRepository repository,
+                                        IImageService imageService) : Controller
     {
         public async Task<IActionResult> Index()
         {
@@ -20,6 +23,13 @@ namespace Medilab_Dapper.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateDepartment(CreateDepartmentDto createDto)
         {
+            if (createDto.ImageFile != null)
+            {
+                var imagePath = await imageService.SaveImageAsync(createDto.ImageFile, "departments");
+                createDto.ImageUrl = imagePath;
+                ModelState.Remove("ImageUrl");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(createDto);

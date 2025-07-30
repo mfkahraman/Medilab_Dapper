@@ -5,6 +5,8 @@
         public required int DepartmentId { get; set; }
         public required string DepartmentName { get; set; }
         public string? Description { get; set; }
+        public string? ImageUrl { get; set; }
+        public FormFile? ImageFile { get; set; }
 
     }
 }
