@@ -81,7 +81,7 @@
                         <a asp-action="CancelAppointment" asp-route-id="@item.Id" class="btn btn-warning btn-sm me-1" title="İptal Et">
                             <i class="fas fa-ban"></i>
                         </a>
-                        <a asp-action="DeleteAppointmentAsync" asp-route-id="@item.Id" class="btn btn-danger btn-sm" title="Sil" onclick="return confirm('Silmek istediğinize emin misiniz?')">
+                            <a asp-action="DeleteAppointment" asp-route-id="@item.Id" class="btn btn-danger btn-sm" title="Sil" onclick="return confirm('Silmek istediğinize emin misiniz?')">
                             <i class="fas fa-trash-alt"></i>
                         </a>
                         }
