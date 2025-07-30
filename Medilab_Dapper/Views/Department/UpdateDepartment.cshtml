@@ -1,4 +1,4 @@
-﻿@model GetDepartmentByIdDto
+﻿@model UpdateDepartmentDto
 
 @{
     ViewData["Title"] = "Departman Güncelle";
@@ -13,6 +13,7 @@
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
     <input type="hidden" asp-for="DepartmentId" />
+    <input asp-for="ImageUrl" type="hidden" />
 
     <div class="mb-3">
         <label asp-for="DepartmentName" class="form-label">Departman Adı</label>
@@ -24,6 +25,12 @@
         <label asp-for="Description" class="form-label">Departman Açıklaması</label>
         <input asp-for="Description" class="form-control" />
         <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ImageFile" class="form-label"></label>
+        <input asp-for="ImageFile" type="file" class="form-control" />
+        <span asp-validation-for="ImageFile" class="text-danger"></span>
     </div>
 
     <button type="submit" class="btn btn-primary">Oluştur</button>

@@ -46,12 +46,32 @@ namespace Medilab_Dapper.Controllers
             {
                 return NotFound();
             }
-            return View(department);
+
+            var updateDto = new UpdateDepartmentDto
+            {
+                DepartmentId = department.DepartmentId,
+                DepartmentName = department.DepartmentName,
+                Description = department.Description,
+                ImageUrl = department.ImageUrl
+            };
+
+            return View(updateDto);
         }
 
         [HttpPost]
         public async Task<IActionResult> UpdateDepartment(UpdateDepartmentDto updateDto)
         {
+            if (updateDto.ImageFile != null)
+            {
+                //Delete old image if exists
+                if (!string.IsNullOrEmpty(updateDto.ImageUrl))
+                    await imageService.DeleteImageAsync(updateDto.ImageUrl);
+
+                var imagePath = await imageService.SaveImageAsync(updateDto.ImageFile, "departments");
+                updateDto.ImageUrl = imagePath;
+                ModelState.Remove("ImageUrl");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(updateDto);
