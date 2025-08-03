@@ -1,4 +1,4 @@
-# 🚀 Medilab – ASP.NET Core Web Application with Dapper
+# 🏥 Medilab – ASP.NET Core Web Application with Dapper
 
 Welcome to **Medilab**, a simple health service web project built using ASP.NET Core MVC.  
 This project was created for educational purposes — mainly to practice **Dapper ORM** in a real-world scenario.  
